@@ -1,0 +1,91 @@
+#1
+incrementedValue = 1 #initialize starting value
+while incrementedValue < 10**8:  #loop until value is greater than or equal to 10^8
+   incrementedValue = incrementedValue*(incrementedValue+1)     #multiply starting value consecutively
+print(incrementedValue) #output
+
+#2
+def stringsToDictionary(strings): #define the function
+    dictOfLengths={} #initialize dictionary
+    for string in strings: #loop through received list of strings 
+        dictOfLengths[string] = (len(string)) #set dict for which the key of each element is string and the value is the string length
+                                                       
+    return dictOfLengths #returns filled dictionary
+strings = ["monkey", "ape", "cow"] #define list of strings
+stringsToDictionary(strings) #call function
+
+#3
+def xToTheY(x,y): #define the function
+    return x**y  #returns x^y
+list = [[5,6], [5,7], [4,2], [3,6], [9,8], [1,3], [9,3], [7,1], [5,4], [2,7], [9,1], [9,3], [2,5]] #define list
+for pair in list: #loop through list
+    print(xToTheY(pair[0],pair[1])) #splits pairs and calls function
+    
+#4a
+from random import random #import random
+
+l = [random() for i in range(20)] #define list with 20 random values ranging from 0 to 1
+x = random() #define random value ranging from 0 to 1 
+b = sorted(l) #sort list 
+print(b) #output sorted list 
+print(x) #output random value
+
+#4b
+next(i for i,v in enumerate(b) if v > x) #Find and output the index of the first element in the list that is equal to or greater
+                                            #than x.
+
+#5
+import math #import math library
+def calculateAreas(radiusOfCircle1, radiusOfCircle2): #define function
+    areaOfCircle1 = math.pi*radiusOfCircle1**2 #calculates area of cricle 1
+    areaOfCircle2 = math.pi*radiusOfCircle2**2 #calculates area of cricle 2
+    print(f'Area of Circle 1: {areaOfCircle1}') #output
+    print(f'Area of Circle 2: {areaOfCircle2}') #output
+
+       
+    if areaOfCircle2 > areaOfCircle1: #determine which circle is larger
+        larger = areaOfCircle2 
+        smaller = areaOfCircle1
+    else:
+        larger = areaOfCircle1
+        smaller = areaOfCircle2
+    percentageOfSmallerLarger = smaller/larger*100 #calculating percentage of coverage
+    return percentageOfSmallerLarger #returns percentage of coverage
+print(f'Percentage of larger covered by smaller: {calculateAreas(23, 15)}%') #call function and output results
+
+#6
+def calculateProportion(numbersList): #define function
+    dictionaryForProportions = {} #initialize dictionary 
+       
+   
+    for element in numbersList: #loop through list
+        dictionaryForProportions[element] = sum(i <= element for i in numbersList)/len(numbersList)*100 #calculating proportions of list
+
+
+    return dictionaryForProportions #returns dictionary of proportions
+
+print (calculateProportion([1,3,5,6,4,3,7,8,9,4,3,5,10,46])) #call function and output results
+
+#7 (bonus)
+totalSeconds = int(input("Input time in seconds: ")) #get total seconds
+totalMinutes = totalSeconds//60 #convert total seconds to total minutes
+seconds = totalSeconds%60 #convert total seconds to seconds by getting remainder of quotient of total minutes
+hours = totalMinutes//60 #convert total minutes to hours
+minutes = totalMinutes%60 #convert total minutes to remaining minutes
+if hours>=12: #determine if am or pm
+    amOrPm="pm" 
+else:
+    amOrPm="am" 
+if hours>24: #determine if result is valid
+    print ("nuh uh uh")
+
+else:
+    print(hours, minutes, seconds, amOrPm) #output  
+
+#8
+import pandas as pd #import pandas package 
+
+data = {'A':[1,2,2,1], 'B':[3.1,4.2,1.5,6.3], 'C':[800,150,400,210]} #define dictionary with columns and rows as keys and values
+
+df = pd.DataFrame(data) #create data frame
+print(df) #output dataframe
