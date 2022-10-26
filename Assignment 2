@@ -1,0 +1,145 @@
+Question 1:
+
+fbsResult = int(input("Please enter FBS test result in mg/dl: ")) #get result
+if fbsResult <= 99: #decide range
+    print("Your FBS is within the normal range.") #print result 
+else:
+    print("Your FBS is higher than the normal range.") #print result
+    
+ Question 2:
+ 
+from random import sample #import package 
+
+
+for i in range(0,100):
+
+    a = sample(['1','2','3'],1)
+    b = sample(['1','2','3'],1)
+    
+    file_a = open(file='file1.txt', mode='a')
+    file_b = open(file='file2.txt', mode='a')
+
+    file_a.write('\n'+a[0])
+    file_b.write('\n'+b[0])
+    
+file_a.close() #close file a
+file_b.close() #close file b
+
+file_a = open(file='file1.txt', mode='r') #open file a 
+file_b = open(file='file2.txt', mode='r') #open file b 
+#loop through both files read each line to check if value is the same
+for file_a_line in file_a:
+    file_b_line = file_b.readline()
+    if file_a_line == file_b_line and file_a_line.strip().isnumeric() and file_b_line.strip().isnumeric():
+        print("Success! Both numbers are",file_a_line)
+    file_a_line = file_a.readline()
+    file_b_line = file_b.readline()
+file_a.close() #close file a 
+file_b.close() #close file b 
+
+Question 3:
+
+f = open('sample-file.txt', 'r') #open sample file
+b = f.readline() #read first line  
+q_count = 0 #initialize count
+while b: #while file has lines to read check if value q exists and increment count
+    if 'q' in b:
+        q_count += 1
+    b = f.readline() 
+print("Total number of lines that include the letter 'q' character:", q_count) #output result
+
+Question 4:
+
+import pandas as pd #import pandas package 
+import matplotlib.pyplot as plt #import mat package 
+
+data = pd.read_csv('student.csv') #read file 
+data = data[['internet', 'grade']] #dividing columns
+data2 = data.groupby('internet').mean().reset_index() #obtain mean value of grade with & without internet access
+
+print(data2) #output results 
+
+x = range(len(data2['internet'])) #define x range
+x_labels = data2['internet'] #define label 
+
+plt.bar(x, data2['grade']) #initialize bar graphs
+plt.xticks(x, x_labels) #range and label set
+plt.show() #output graph
+
+Question 5:
+
+import pandas as pd #import pandas package
+import matplotlib.pyplot as plt #import mat package
+
+data = pd.read_csv('student.csv') #read file 
+data = data[['studytime', 'grade']] #dividing columns
+data2 = data.groupby('studytime').mean().reset_index() #obtain mean value of grade with & without internet access
+
+print(data2) #output results 
+
+plt.plot(data2['studytime'],data2['grade']) #initialize line graph
+plt.show() #output graph
+
+Question 6:
+
+import pandas as pd #import pandas package
+import numpy as np #import numpy package
+import matplotlib.pyplot as plt #import mat package 
+from sklearn.preprocessing import StandardScaler #imporrt sklearn package
+
+crime_file = pd.read_csv('crime.csv') #read file 
+pop_under_pov = crime_file['PctPopUnderPov'] #obtain x values
+pop_under_pov_list = np.array(pop_under_pov).reshape(-1,1) #reshape list
+crimes = crime_file['ViolentCrimesPerPop'] #obtain y values
+crime_list = np.array(crimes).reshape(-1,1) #reshape list
+
+scaler = StandardScaler() #start scaler
+pop_under_pov_scaled = scaler.fit_transform(pop_under_pov_list) #scale values
+crime_scaled = scaler.fit_transform(crime_list) #scale values
+
+x = pop_under_pov_scaled #define x function
+y = crime_scaled #define y function
+plt.scatter(x, y, label = 'Crime Rates in Pov', color = 'blue') #initialize scatterplot
+plt.legend() #include legend
+plt.show() #show legend
+
+Question 7:
+
+from bs4 import BeautifulSoup #import bs4 package
+import requests #import request library
+import numpy as np #import numpy package
+
+content = requests.get("https://en.wikipedia.org/wiki/Data_science").text #retrieve data science wiki page
+soup = BeautifulSoup(content, 'html5lib') #convert to html5
+
+paragraphs = soup.find_all('p') #get list of paragraphs
+para_count = 0 #initialize counter
+#loop list of paragraphs to check if learning or Learning is in paragraphs and increment counter
+for p in paragraphs:
+    if 'learning' or "Learning" in p:
+        para_count+=1
+        
+print(para_count) #output result
+
+Question 8:
+
+import matplotlib.pyplot as plt #import mat package
+import pandas as pd #import pandas package
+
+student_file = pd.read_csv('student.csv') #read file
+
+
+index_less_than_3_hours = student_file['studytime'] < 3 #get indices of grades where study time is less than 3 hours
+grades_less_than_3_hours = list(student_file.loc[index_less_than_3_hours,'grade']) #create list of grades according to previous indices 
+
+plt.boxplot(grades_less_than_3_hours) #define boxplot
+print('less than 3 hours') #output title
+plt.show() #show boxplot
+
+
+index_equal__to_or_more_than_3 = student_file['studytime'] >= 3 #get indices of grades where study time is more than or equal to 3 hours 
+grades_equal_to_or_more_than_3 = list(student_file.loc[index_equal__to_or_more_than_3,'grade']) #create list of grades according to previous indices
+
+plt.boxplot(grades_equal_to_or_more_than_3) #output title
+print('more than or equal to 3 hours') #output title
+plt.show() #show boxplot
