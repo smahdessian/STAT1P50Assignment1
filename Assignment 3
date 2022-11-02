@@ -1,0 +1,140 @@
+Question #1 
+
+from sklearn.linear_model import LinearRegression #import sklearn package
+import pandas as pd #import pandas package 
+import matplotlib.pyplot as plt
+import numpy as np 
+
+data = pd.read_csv('crime1.csv') #read file 
+x = data[['ViolentCrimesPerPop']] #retrieve violent crimes per popultaion 
+y = data['PctUnemployed'] #retrieve percent unemployed
+q = data['PctBSorMore'] #retrieve percent with bachelors or more
+
+trained_model_unemployed = LinearRegression(fit_intercept = False).fit(x, y) #define and fit model for unemployed
+trained_model_bachelors = LinearRegression(fit_intercept = False).fit(x, q) #define and fit model for bachelors
+
+print('unemployed',(trained_model_unemployed.coef_)) #print coefficient unemployed 
+print('bachelors', (trained_model_bachelors.coef_)) #print coefficient bachelors
+
+
+Question #2
+
+import pandas as pd #import pandas package 
+from sklearn.linear_model import LinearRegression #import sklearn package
+
+data = pd.read_csv("crime1.csv") #read file
+
+x = data[['PctPopUnderPov', 'PctUnemployed', 'PolicPerPop', 'Pcthomeless', 'PctBSorMore']] #retrieve all other variables 
+y = data['ViolentCrimesPerPop'] #retrieve violent crimes per population 
+
+trained_model_all_variables = LinearRegression().fit(x, y) #define and fit model for all other variables 
+print(max(regr.coef_, key=abs)) #print most influential variable
+
+n_features_in
+
+
+Question #3
+
+import pandas as pd #import pandas package 
+import numpy as np #import numpy package
+from sklearn.linear_model import LogisticRegression #import sklearn logistic regression package 
+from sklearn.model_selection import train_test_split #import sklearn split package
+
+data = pd.read_csv('kidney_disease1.csv') #read file
+
+
+x = np.array(data.iloc[:,0:8]) #retrieve all variables other than ckd
+y = np.array(data['ckd']) #retrive ckd variable
+
+x_train, x_test, y_train, y_test = train_test_split(x ,y ,test_size = 0.2, random_state = 1) #train and test split 
+logistic_regression = LogisticRegression() #load logistic model 
+logistic_regression.fit(x_train ,y_train) #train logistic model 
+
+y_predicted = logistic_regression.predict(x_test) #predict model 
+y_predicted = pd.DataFrame(y_predicted, columns = ['predicted']) 
+
+df = data.copy() 
+df['predictions'] = y_predicted
+
+
+print(df) #print results 
+
+
+Question #4
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression as lm
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, f1_score
+
+x_train, x_test, y_train, y_test = train_test_split(blood_factors, classification, test_size = 0.3) #split training data
+
+model = sklearn.linear_model.LogisticRegression() #load logistic model
+trained = logistic_model.fit(x_train, y_train) #train logistic model
+y_predicted = logistic_model.predict(x_test) #predict model
+
+print('accuracy:', accuracy_score(y_test, y_predicted)) #output accuracy score nad f1 score
+print('f1 score:', f1_score(y_test, y_predicted))
+
+
+Question #5
+
+def get_frequency(input_string):
+    list_of_words = input_string.split(' ')
+    dict_frequencies = {}
+
+    for word in list_of_words: 
+        if word in dict_frequencies.keys(): 
+            dict_frequencies[word] = dict_frequencies[word] + 1
+        else:
+            dict_frequencies[word] = 1
+    return(word, dict_frequencies)
+
+    
+get_frequency('Monkeys run to the Monkeys house') #get frequency of data scienece 
+
+
+Question #6
+
+from sklearn.linear_model import LogisticRegression #import sklearn package
+import pandas as pd #import pandas package 
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+data = pd.read_csv('email1.csv')
+
+data['hyperlink'] = None
+data['free'] = None
+data['click'] = None
+data['business'] = None
+data['frequency'] = None
+
+search_word = ("hyperlink, free, click, business, frequency")
+
+if search_word in open('search.txt').read():
+    print("word found")
+else:
+    print("word not found")
+    
+def freq(str):
+ 
+    
+    str = str.split()        
+    str2 = []
+ 
+    for i in str:            
+ 
+        if i not in str2:
+ 
+            str2.append(i)
+             
+    for i in range(0, len(str2)):
+ 
+        print('Frequency of', str2[i], 'is :', str.count(str2[i]))   
+ 
+    def main():
+    str ='hyperlink, free, click, business, frequency'
+    freq(str)                   
+ 
+    if __name__=="__main__":
+    main()             
