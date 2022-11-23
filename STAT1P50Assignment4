@@ -1,0 +1,132 @@
+# STAT1P50Assignment4
+
+Question #1
+
+import pandas as pd #import pandas package
+from sklearn import tree #import sklearn tree package
+import matplotlib.pyplot as plt #import matplot package
+from sklearn.model_selection import train_test_split #import sklearn train test split package
+from sklearn.tree import DecisionTreeClassifier #import slearn decision tree package 
+from sklearn import datasets #import sklearn datasets package
+from sklearn.metrics import accuracy_score #import sklearn accuracy score package
+
+data = pd.read_csv('kidney_disease1.csv') #read file 
+
+X, y = data.drop(['ckd'],axis=1), data[['ckd']] 
+
+feature_names = list(X.columns)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33) #train test split size defined 
+
+model = DecisionTreeClassifier(criterion = 'entropy') # Define model
+model = model.fit(X_train, y_train) # Train model
+
+
+fig = plt.figure(figsize=(40,20)) #set figure size 
+fig = tree.plot_tree(model, feature_names=feature_names,
+class_names=['0','1'], filled=True)
+plt.savefig('tree.pdf') #save figure 
+
+
+#Person: A
+
+#Person A does not have kidney disease according to the decison tree
+
+#Person: B
+
+#Person B does not have kidney disease according to the decision tree 
+
+
+Question #2
+
+from sklearn.preprocessing import MinMaxScaler #import sklearn minMaxScaler package
+from sklearn.datasets import load_diabetes #import sklearn diabetes dataset pacakage
+from tensorflow.keras.layers import Dense, InputLayer #import tensorflow dense, input layer package
+from tensorflow.keras.models import Sequential #import tensorflow sequential package
+from sklearn.model_selection import train_test_split #import sklearn train test split package
+
+# load dataset
+diabetes = load_diabetes()
+X = diabetes.data #define x
+y = diabetes.target #define y
+
+
+scaler = MinMaxScaler()
+
+y = y.reshape(-1,1) #reshape y
+y = scaler.fit_transform(y) #transform y
+
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+test_size=0.3) #train test split defined 
+
+model = Sequential() #define model
+
+input_layer = InputLayer(input_shape=(2,)) #input layer shape and size
+model.add(input_layer) #add layer 
+hidden_layer = Dense(8) #define hidden layer size and shape
+model.add(hidden_layer) #add hidden layer
+
+output_layer = Dense(1, activation='relu') #activate relu function for output layer
+model.add(output_layer) #add output layer
+
+model.compile(loss='binary_crossentropy') #compile model
+
+model.fit(X_train, y_train, epochs=10) #fit model
+
+model2 = Sequential() #deinfe second model 
+
+input_layer = InputLayer(input_shape=(2,)) #input layer shape and size
+model.add(input_layer) #add layer 
+hidden_layer = Dense(8) #define hidden layer size and shape
+model.add(hidden_layer) #add hidden layer
+
+output_layer = Dense(1, activation=None) #define output layer
+model.add(output_layer) #add output layer
+
+model.compile(loss='binary_crossentropy') #compile model
+
+
+Question #4
+
+from tensorflow.keras.datasets import mnist #import tensorflow mnist package
+import tensorflow as tf #import tensorflow package
+from tensorflow.keras.models import Sequential ##import tensorflow package
+from tensorflow.keras.layers import Dense, InputLayer #import tensorflow dense, inputlayer package
+from tensorflow.keras.utils import to_categorical #import tensorflow to_categorical package
+# load dataset
+(X_train, y_train), (X_test, y_test) = mnist.load_data() #
+
+number_of_training_instances = X_train.shape[0]
+number_of_testing_instances = X_test.shape[0]
+
+# reshape dataset
+X_train = X_train.reshape((number_of_training_instances, 28*28)) 
+X_test = X_test.reshape((number_of_testing_instances, 28*28))
+
+
+
+tf.random.set_seed(1)
+model = Sequential()
+
+input_layer = InputLayer(input_shape=(28*28)) #input layer shape and size
+model.add(input_layer) #add layer 
+hidden_layer = Dense(28*28/2) #define hidden layer size and shape
+model.add(hidden_layer) #add hidden layer
+output_layer = Dense(10, activation='softmax') #activate softmax function for output layer
+model.add(output_layer) #add output layer
+
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+
+
+model.compile(loss = 'categorical_crossentropy', metrics = #compile model
+['accuracy'])
+X_train.shape
+
+model.fit(X_train, y_train, epochs = 10)
+y_pred= model.predict(X_test) 
+y_pred
+preformance = model.evaluate(X_test, y_test) #evaluate model
+print(preformance[1]) #print results
+model.save('digits_model.h5') #save model
+
